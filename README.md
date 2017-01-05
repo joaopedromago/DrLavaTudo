@@ -36,7 +36,7 @@ primary key(id)
 
 #Exercício 1
 ### No primeiro exercício, foi pedido uma alteração para que o cliente consiga fazer mais de um serviço por solicitação ###
-#### Então referenciei [Chaves Estrangeiras](https://msdn.microsoft.com/pt-br/library/ms189049.aspx) da tabela ordem_de_servico, para que seja possível utilizar a tabela para realizar múltiplo serviços ####
+#### Então referenciei [Chaves Estrangeiras](https://msdn.microsoft.com/pt-br/library/ms189049.aspx) da tabela ```ordem_de_servico```, para que seja possível utilizar a tabela para realizar múltiplo serviços ####
 ```SQL
 alter table ordem_de_servico add foreign key(id_servicos) references servicos(id), add foreign key(id_cliente) references cliente(id);
 ```
@@ -64,7 +64,7 @@ endereco_UF char(2) not null,
 primary key(ID)
 );
 ```
-#### Basta adicionar a [Chave Estrangeira](https://msdn.microsoft.com/pt-br/library/ms189049.aspx) na tabela ordem_de_servico, e já será possível ligar o serviço com o endereço ####
+#### Basta adicionar a [Chave Estrangeira](https://msdn.microsoft.com/pt-br/library/ms189049.aspx) na tabela ```ordem_de_servico```, e já será possível ligar o serviço com o endereço ####
 ```SQL
 alter table ordem_de_servico add ID_Endereco int not null, add foreign key(ID_Endereco) references Endereco(ID);
 ```
