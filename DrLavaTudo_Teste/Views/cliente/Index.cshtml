@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cliente</h2>
+<div id="body">
+    <form id="selectClienteForm" method="post" class="container">
+        <label class="form-control'">Id Cliente: </label>
+        <input type="text" name="Id_cliente" id="Id_cliente" class="form-control" /><br />
+        <input type="button" id="selectCliente" value="Procurar" class="btn-success" />
+        <input type="button" id="selectAllCliente" value="Selecionar Todos" class="btn-info" /><br /><br />
+    </form>
+
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th>Id Cliente</th>
+                <th>Nome do Cliente</th>
+                <th>Id do Os</th>
+                <th>Id do Serviço</th>
+                <th>Nome do Serviço</th>
+            </tr>
+        </thead>
+        <tbody id="clientes"></tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        //função para gerar os dados da tabela assim que a tela carregar
+    $(function () {
+        $.getJSON('/api/cliente', function (osJsonPayload) {
+            $(osJsonPayload).each(function (i, item) {
+                $('#clientes').append('<tr><td>' + item.Id + '</td><td>' + item.Nome + '</td><td>' + item.Id_os + '</td><td>' + item.Id_servico + '</td><td>' + item.Nome_servico + '</td></tr>');
+            });
+        });
+    });
+        //função para voltar a tabela para o padrão, sem atualizar a página
+    $('#selectAllCliente').click(function () {
+        $("#Id_cliente").val("");
+        $('#clientes').children().remove();
+        $.getJSON('/api/cliente', function (osJsonPayload) {
+            $(osJsonPayload).each(function (i, item) {
+                $('#clientes').append('<tr><td>' + item.Id + '</td><td>' + item.Nome + '</td><td>' + item.Id_os + '</td><td>' + item.Id_servico + '</td><td>' + item.Nome_servico + '</td></tr>');
+            });
+        });
+    });
+        //função para carregar a tabela com dados de um cliente com id específico
+    $('#selectCliente').click(function () {
+        var selected = $("#Id_cliente").val();
+        $('#clientes').children().remove();
+        $.getJSON('/api/cliente/' + selected, function (osJsonPayload) {
+            $(osJsonPayload).each(function (i, item) {
+                $('#clientes').append('<tr><td>' + item.Id + '</td><td>' + item.Nome + '</td><td>' + item.Id_os + '</td><td>' + item.Id_servico + '</td><td>' + item.Nome_servico + '</td></tr>');
+            });
+        });
+    });
+
+    </script>
+}

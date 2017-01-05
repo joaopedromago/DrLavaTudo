@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ordem de Serviço</h2>
+<div id="body">
+    <form id="selectOsForm" method="post" class="container">
+        <label class="form-control'">Id Os: </label>
+        <input type="text" name="Id_os" id="Id_os" class="form-control"/><br />
+        <input type="button" id="selectOs" value="Procurar" class="btn-success"/>
+        <input type="button" id="selectAllOs" value="Selecionar Todos" class="btn-info" /><br /><br />
+    </form>
+    <table class="table-bordered">
+        <thead>
+            <tr>
+                <th>Id Os</th>
+                <th>Data de Contratação</th>
+                <th>Data de Execução</th>
+                <th>Id do Cliente</th>
+                <th>Id do Serviço</th>
+                <th>Id do Endereço</th>
+                <th>Nome do Cliente</th>
+                <th>Nome do Serviço</th>
+                <th>Email do Cliente</th>
+                <th>Data de Nascimento do Cliente</th>
+                <th>Telefone celular do Cliente</th>
+                <th>Telefone residencial do Cliente</th>
+                <th>Endereço: Cep</th>
+                <th>Endereço: Rua</th>
+                <th>Endereço: Bairro</th>
+                <th>Endereço: Número</th>
+                <th>Endereço: Complemento</th>
+                <th>Endereço: Cidade</th>
+                <th>Endereço: UF</th>
+            </tr>
+        </thead>
+        <tbody id= "os">
+                
+        </tbody>
+    </table>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        //função para gerar os dados da tabela assim que a tela carregar
+    $(function () {
+        $.getJSON('/api/os', function (osJsonPayload) {
+            $(osJsonPayload).each(function (i, item) {
+                $('#os').append('<tr><td>' + item.Id + '</td><td>' + item.Data_contratacao + '</td><td>' + item.Data_execucao + '</td><td>' + item.Id_cliente + '</td><td>' + item.Id_servicos + '</td><td>' + item.Id_endereco + '</td><td>' + item.Nome_cliente + '</td><td>' + item.Nome_servico + '</td><td>' + item.Email_cliente + '</td><td>' + item.Data_nasc_cliente + '</td><td>' + item.Telefone_celular_cliente + '</td><td>' + item.Telefone_residencial_cliente + '</td><td>' + item.Cep_endereco + '</td><td>' + item.Rua_endereco + '</td><td>' + item.Bairro_endereco + '</td><td>' + item.Numero_endereco + '</td><td>' + item.Complemento_endereco + '</td><td>' + item.Cidade_endereco + '</td><td>' + item.Uf_endereco + '</td></tr>');
+            });
+        });
+    });
+        //função para voltar a tabela para o padrão, sem atualizar a página
+    $('#selectAllOs').click(function () {
+        $("#Id_os").val("");
+        $('#os').children().remove();
+        $.getJSON('/api/os', function (osJsonPayload) {
+            $(osJsonPayload).each(function (i, item) {
+                $('#os').append('<tr><td>' + item.Id + '</td><td>' + item.Data_contratacao + '</td><td>' + item.Data_execucao + '</td><td>' + item.Id_cliente + '</td><td>' + item.Id_servicos + '</td><td>' + item.Id_endereco + '</td><td>' + item.Nome_cliente + '</td><td>' + item.Nome_servico + '</td><td>' + item.Email_cliente + '</td><td>' + item.Data_nasc_cliente + '</td><td>' + item.Telefone_celular_cliente + '</td><td>' + item.Telefone_residencial_cliente + '</td><td>' + item.Cep_endereco + '</td><td>' + item.Rua_endereco + '</td><td>' + item.Bairro_endereco + '</td><td>' + item.Numero_endereco + '</td><td>' + item.Complemento_endereco + '</td><td>' + item.Cidade_endereco + '</td><td>' + item.Uf_endereco + '</td></tr>');
+            });
+        });
+    });
+        //função para carregar a tabela com dados de um cliente com id específico
+    $('#selectOs').click(function () {
+        var selected = $("#Id_os").val();
+        $('#os').children().remove();
+        $.getJSON('/api/os/'+selected, function (osJsonPayload) {
+            $(osJsonPayload).each(function (i, item) {
+                $('#os').append('<tr><td>' + item.Id + '</td><td>' + item.Data_contratacao + '</td><td>' + item.Data_execucao + '</td><td>' + item.Id_cliente + '</td><td>' + item.Id_servicos + '</td><td>' + item.Id_endereco + '</td><td>' + item.Nome_cliente + '</td><td>' + item.Nome_servico + '</td><td>' + item.Email_cliente + '</td><td>' + item.Data_nasc_cliente + '</td><td>' + item.Telefone_celular_cliente + '</td><td>' + item.Telefone_residencial_cliente + '</td><td>' + item.Cep_endereco + '</td><td>' + item.Rua_endereco + '</td><td>' + item.Bairro_endereco + '</td><td>' + item.Numero_endereco + '</td><td>' + item.Complemento_endereco + '</td><td>' + item.Cidade_endereco + '</td><td>' + item.Uf_endereco + '</td></tr>');
+            });
+        });
+    });
+    </script>
+}
